@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Ulang Tahun Teh Halimah! ✨</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --primary: #ff758c;
+            --secondary: #ff7eb3;
+            --accent: #d6336c;
+            --bg-color: #fff0f3;
+            --card-bg: #ffffff;
+            --text-color: #4a4a4a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 30px 15px;
+        }
+
+        .container {
+            background: var(--card-bg);
+            padding: 40px 30px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(255, 117, 140, 0.15);
+            text-align: center;
+            max-width: 550px;
+            width: 100%;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+
+        h2 {
+            color: var(--primary);
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        .sender-badge {
+            display: inline-block;
+            background: #ffe6eb;
+            color: var(--accent);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 117, 140, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 117, 140, 0.6);
+        }
+
+        /* Kalender Oktober */
+        .calendar-box {
+            background: #fff5f7;
+            border: 2px solid #ffccd5;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .calendar-header {
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            font-size: 13px;
+        }
+
+        .day-name {
+            font-weight: 600;
+            color: var(--primary);
+            padding-bottom: 5px;
+        }
+
+        .calendar-day {
+            background: white;
+            padding: 8px 0;
+            border-radius: 8px;
+            color: #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+        }
+
+        .calendar-day.empty {
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .calendar-day.birthday {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(255, 117, 140, 0.4);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
+        /* Kotak Quotes Hidup */
+        .quote-box {
+            background: #fff5f7;
+            border: 2px dashed var(--primary);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            font-style: italic;
+            color: var(--accent);
+            font-weight: 500;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        /* Buku Tamu / Ucapan */
+        .guestbook-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .guestbook-form input, .guestbook-form textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ffccd5;
+            border-radius: 12px;
+            font-size: 14px;
+            outline: none;
+            background: #fff9fa;
+        }
+
+        .guestbook-form input:focus, .guestbook-form textarea:focus {
+            border-color: var(--primary);
+            background: white;
+        }
+
+        .wishes-list {
+            margin-top: 20px;
+            max-height: 220px;
+            overflow-y: auto;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-right: 5px;
+        }
+
+        .wish-card {
+            background: #fff5f7;
+            padding: 12px 15px;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+            font-size: 14px;
+        }
+
+        .wish-card strong {
+            color: var(--accent);
+            display: block;
+            margin-bottom: 3px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Kartu Utama -->
+    <div class="container">
+        <h1>🎉 Selamat Ulang Tahun<br>Teh Halimah! 🌸</h1>
+        <div class="sender-badge">Spesial dari: Kaswati ✨</div>
+        <p>Terima kasih sudah jadi rekan kerja yang super baik, asyik, dan selalu menginspirasi tim kita. Semoga panjang umur, sehat selalu, makin sukses, dan apa pun impian Teh Halimah segera terwujud ya! 💖</p>
+        
+        <button class="btn" onclick="rayakan()">Pencet untuk Kejutan! ✨</button>
+    </div>
+
+    <!-- Kalender Bulan Oktober (Tanggal 7 Spesial) -->
+    <div class="container">
+        <h2>📅 Tanggal Istimewa</h2>
+        <p style="font-size: 13px; margin-bottom: 15px;">Hari spesial di mana wanita hebat ini lahir ke dunia ✨</p>
+        
+        <div class="calendar-box">
+            <div class="calendar-header">Oktober — Hari Lahir Teh Halimah 💖</div>
+            <div class="calendar-grid">
+                <!-- Nama Hari -->
+                <div class="day-name">Min</div>
+                <div class="day-name">Sen</div>
+                <div class="day-name">Sel</div>
+                <div class="day-name">Rab</div>
+                <div class="day-name">Kam</div>
+                <div class="day-name">Jum</div>
+                <div class="day-name">Sab</div>
+
+                <!-- Anggal Kalender (Contoh penyesuaian grid) -->
+                <!-- Asumsi tanggal 1 jatuh di hari Rabu (3 kotak kosong di awal) -->
+                <div class="calendar-day empty"></div>
+                <div class="calendar-day empty"></div>
+                <div class="calendar-day empty"></div>
+                <div class="calendar-day">1</div>
+                <div class="calendar-day">2</div>
+                <div class="calendar-day">3</div>
+                <div class="calendar-day">4</div>
+                
+                <div class="calendar-day">5</div>
+                <div class="calendar-day">6</div>
+                <div class="calendar-day birthday" title="Hari Lahir Teh Halimah!">7 🎂</div>
+                <div class="calendar-day">8</div>
+                <div class="calendar-day">9</div>
+                <div class="calendar-day">10</div>
+                <div class="calendar-day">11</div>
+
+                <div class="calendar-day">12</div>
+                <div class="calendar-day">13</div>
+                <div class="calendar-day">14</div>
+                <div class="calendar-day">15</div>
+                <div class="calendar-day">16</div>
+                <div class="calendar-day">17</div>
+                <div class="calendar-day">18</div>
+
+                <div class="calendar-day">19</div>
+                <div class="calendar-day">20</div>
+                <div class="calendar-day">21</div>
+                <div class="calendar-day">22</div>
+                <div class="calendar-day">23</div>
+                <div class="calendar-day">24</div>
+                <div class="calendar-day">25</div>
+
+                <div class="calendar-day">26</div>
+                <div class="calendar-day">27</div>
+                <div class="calendar-day">28</div>
+                <div class="calendar-day">29</div>
+                <div class="calendar-day">30</div>
+                <div class="calendar-day">31</div>
+                <div class="calendar-day empty"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kotak Quotes & Inspirasi Hidup -->
+    <div class="container">
+        <h2>💡 Percikan Inspirasi Hari Ini</h2>
+        <p style="font-size: 13px; margin-bottom: 15px;">Klik tombol di bawah untuk membaca kutipan penyemangat hidup khusus untuk Teh Halimah!</p>
+        
+        <div id="quoteDisplay" class="quote-box">
+            "Setiap hari adalah lembaran baru untuk menulis hal-hal indah dalam hidup. Teruslah bersinar, Teh!" ✨
+        </div>
+
+        <button class="btn" onclick="gantiQuote()" style="font-size: 14px; padding: 10px 22px;">Ambil Quotes Baru 🌸</button>
+    </div>
+
+    <!-- Buku Tamu / Ucapan Tim -->
+    <div class="container">
+        <h2>💌 Buku Tamu & Doa Tim</h2>
+        <p style="font-size: 13px; margin-bottom: 15px;">Rekan-rekan lain juga bisa ngetik ucapan di sini!</p>
+        
+        <div class="guestbook-form">
+            <input type="text" id="namaPengirim" placeholder="Nama Kamu...">
+            <textarea id="pesanPengirim" rows="3" placeholder="Tulis doa atau pesan untuk Teh Halimah..."></textarea>
+            <button class="btn" onclick="tambahUcapan()" style="font-size: 14px; padding: 10px;">Kirim Ucapan 🚀</button>
+        </div>
+
+        <div id="daftarUcapan" class="wishes-list">
+            <!-- Contoh ucapan awal -->
+            <div class="wish-card">
+                <strong>Kaswati</strong>
+                Happy birthday Teh Halimah tersayang! Sukses terus kariernya dan bahagia selalu ya! 🎉💖
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Kumpulan Quotes Inspirasi Hidup
+        const daftarQuotes = [
+            "\"Setiap hari adalah lembaran baru untuk menulis hal-hal indah dalam hidup. Teruslah bersinar, Teh!\" ✨",
+            "\"Kesuksesan bukan kunci kebahagiaan. Kebahagiaan adalah kunci kesuksesan. Jika kamu mencintai apa yang kamu lakukan, kamu akan berhasil.\" 💖",
+            "\"Wanita hebat bukan yang tidak pernah lelah, tapi yang tetap melangkah dengan anggun meski badai menerpa.\" 🌸",
+            "\"Hal-hal baik datang kepada mereka yang sabar. Tapi hal-hal yang lebih baik datang kepada mereka yang tidak pernah menyerah.\" 💪",
+            "\"Jadilah versi terbaik dari dirimu sendiri, bukan tiruan dari orang lain. Keunikanmu adalah kekuatanmu!\" ⭐",
+            "\"Senyuman tulus adalah bahasa kebaikan yang bisa dipahami oleh siapa saja. Tetaplah sebarkan energi positifmu!\" 🌻"
+        ];
+
+        function gantiQuote() {
+            const randomIndex = Math.floor(Math.random() * daftarQuotes.length);
+            document.getElementById('quoteDisplay').innerText = daftarQuotes[randomIndex];
+        }
+
+        // Fungsi Animasi Confetti
+        function rayakan() {
+            confetti({
+                particleCount: 120,
+                spread: 80,
+                origin: { y: 0.6 }
+            });
+        }
+
+        // Fungsi Menambah Ucapan ke Buku Tamu
+        function tambahUcapan() {
+            const nama = document.getElementById('namaPengirim').value.trim();
+            const pesan = document.getElementById('pesanPengirim').value.trim();
+            const daftar = document.getElementById('daftarUcapan');
+
+            if (nama === '' || pesan === '') {
+                alert('Mohon isi nama dan pesan dulu ya!');
+                return;
+            }
+
+            const card = document.createElement('div');
+            card.className = 'wish-card';
+            card.innerHTML = `<strong>${escapeHtml(nama)}</strong>${escapeHtml(pesan)}`;
+
+            daftar.prepend(card);
+
+            document.getElementById('namaPengirim').value = '';
+            document.getElementById('pesanPengirim').value = '';
+
+            confetti({
+                particleCount: 50,
+                spread: 60,
+                origin: { y: 0.8 }
+            });
+        }
+
+        function escapeHtml(text) {
+            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+    </script>
+
+</body>
+</html>
